@@ -1,12 +1,19 @@
-const express = require('express');
+const { body } = require("express-validator");
+const express = require("express");
 const router = express.Router();
 
-const urlController = require('../controllers/urlController');  
+const urlController = require("../controllers/urlController");
 
-router.get('/api/', urlController.show);
+router.use(express.json());
 
-router.get('/:urlID', urlController.redirectURL);
+router.get("/api/", urlController.show);
 
-router.post('/api/short', urlController.generateURL);
+router.get("/:urlID", urlController.redirectURL);
+
+router.post(
+  "/api/short",
+  body("url").isString().isURL(),
+  urlController.generateURL
+);
 
 module.exports = router;

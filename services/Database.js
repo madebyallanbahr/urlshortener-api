@@ -1,19 +1,32 @@
-const db = require('file-system-db');
-const pathSolver = require('node:path');
+const db = require("file-system-db");
 
 class Database {
-    __path
-    __pool
-    __backup
-    constructor(path, backup){
-        this.__path = pathSolver.resolve(__dirname + path);
-        this.__pool = null;
-        this.__backup = pathSolver.resolve(__dirname + backup); 
-    }
-    init = () => {
-        this.__pool = new db.FSDB(this.__path);
-    }
-    backup = () => {
-        this.__pool.backup(this.__backup);
-    }   
-} 
+  __path;
+  __pool;
+  __backup;
+  constructor(path, backup) {
+    this.__path = path;
+    this.__pool = null;
+    this.__backup = backup;
+  }
+  init = () => {
+    this.__pool = new db.FSDB(this.__path);
+  };
+  insert = (url) => {
+    let data = {
+      fullUrl: url.fullUrl,
+      shortUrl: url.shortUrl,
+    };
+
+    this.__pool.set(data.shortUrl, data.fullUrl);
+  };
+  all = () => {
+    this.__pool.getAll();
+  };
+
+  backup = () => {
+    this.__pool.backup(this.__backup);
+  };
+}
+
+module.exports = Database;

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
     "dev": "nodemon ."
   },
@@ -13,8 +14,8 @@
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
-    "file-system-db": "^2.1.0",
-    "nanoid": "^5.0.7"
+    "express-validator": "^7.1.0",
+    "file-system-db": "^2.1.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
