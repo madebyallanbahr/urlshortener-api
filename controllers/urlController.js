@@ -27,7 +27,7 @@ exports.generateURL = (req, res, next) => {
 
   db.insert(data);
 
-  res.redirect("back");
+  res.render('index', {short: data.shortUrl, full: data.fullUrl});
 };
 
 exports.redirectURL = (req, res, next) => {
