@@ -1,8 +1,9 @@
 class Url {
   fullUrl;
   shortUrl;
-  constructor(fullUrl) {
-    this.fullUrl = fullUrl;
+  constructor() {
+    this.fullUrl = undefined;
+    this.shortUrl = undefined;
   }
   generateShortUrl = () => {
     let result = "";
@@ -16,6 +17,9 @@ class Url {
     }
     this.shortUrl = result;
   };
+  setFullUrl = (url) => {
+    this.fullUrl = url;
+  }
   returnUrl = () => {
     return {
       fullUrl: this.fullUrl,

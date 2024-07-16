@@ -21,8 +21,16 @@ class Database {
     this.__pool.set(data.shortUrl, data.fullUrl);
   };
   all = () => {
-    this.__pool.getAll();
+    return this.__pool.getAll();
   };
+
+  ifExistsReturn = (id) => {
+    if(this.__pool.has(id)) {
+      return this.__pool.get(id);
+    } else {
+      return false;
+    }
+  }
 
   backup = () => {
     this.__pool.backup(this.__backup);

@@ -6,7 +6,7 @@ const { validationResult } = require("express-validator");
  * @description Generate a URL Short
  */
 exports.generateURL = (req, res, next) => {
-  const url = new urlService(req.body.url);
+  const url = new urlService();
   const db = new databaseService(
     "./db/database.json",
     "./db/backup/database.json"
@@ -19,6 +19,8 @@ exports.generateURL = (req, res, next) => {
 
   db.init();
 
+  url.setFullUrl(req.body.url)
+
   url.generateShortUrl();
 
   let data = url.returnUrl();
@@ -29,8 +31,21 @@ exports.generateURL = (req, res, next) => {
 };
 
 exports.redirectURL = (req, res, next) => {
-  const url = req.params.urlID;
-  res.json({ url });
+  const db = new databaseService(
+    "./db/database.json",
+    "./db/backup/database.json"
+  );
+
+  db.init();
+  const urlId = req.params.urlID;
+  
+  const url = db.ifExistsReturn(urlId);
+
+  if (!url) {
+    return res.redirect('/api');
+  }
+
+  res.redirect(url);
 };
 
 exports.show = (req, res, next) => {
