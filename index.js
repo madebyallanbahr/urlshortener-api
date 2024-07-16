@@ -7,6 +7,8 @@ dotenv.configDotenv();
 api.use(express.urlencoded({ extended: true }));
 api.use(express.json());
 
+api.set('view engine', 'ejs');
+
 api.use('/', routes)
 
 api.listen(process.env.API_PORT, ()  => {

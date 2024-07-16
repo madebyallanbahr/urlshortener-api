@@ -14,6 +14,6 @@ exports.redirectURL = (req, res, next) => {
     res.json({url});
 }
 
-exports.healthCheck = (req, res, next) => {
-    res.json('Hello world!');
+exports.show = (req, res, next) => {
+    res.render('index')
 }
