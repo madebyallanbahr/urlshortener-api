@@ -1,0 +1,20 @@
+<script async src="https://js.stripe.com/v3/buy-button.js"></script>
+<footer>
+  <div
+    class="uk-alert uk-margin uk-position-bottom-center uk-text-center uk-padding-small"
+    uk-alert
+  >
+    <a href="#" class="uk-alert-close" uk-close></a>
+    <p class="uk-alert-title">Ajudando o Desenvolvedor</p>
+    <p class="uk-margin uk-alert-description uk-text-muted">
+      Se for possível, auxilie o desenvolvedor, com a doação de qualquer valor
+      em R$ para o auxilio de manutenção/futuro desenvolvimento de todas as
+      aplicações.
+    </p>
+    <stripe-buy-button
+      buy-button-id="<%= buttonPayId %>"
+      publishable-key="<%= paymentId %>"
+    >
+    </stripe-buy-button>
+  </div>
+</footer>

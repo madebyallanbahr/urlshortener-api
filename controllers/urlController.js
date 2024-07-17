@@ -1,6 +1,8 @@
 const urlService = require("../services/Url");
 const databaseService = require("../services/Database");
 const { validationResult } = require("express-validator");
+const { configDotenv, config } = require("dotenv");
+configDotenv();
 
 /**
  * @description Generate a URL Short
@@ -55,5 +57,7 @@ exports.show = (req, res, next) => {
     url: req.body.url,
     shortId: req.cookies.shortId,
     host: req.headers.host,
+    paymentId: process.env.PAYMENT_ID,
+    buttonPayId: process.env.BUTTON_PAY_ID,
   });
 };
