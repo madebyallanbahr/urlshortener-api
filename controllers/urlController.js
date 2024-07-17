@@ -30,7 +30,7 @@ exports.generateURL = (req, res, next) => {
 
   db.insert(data);
 
-  res.cookie("shortId", data.shortUrl, { maxAge: 12000 });
+  res.cookie("data", { full: data.fullUrl, short: data.shortUrl });
 
   return res.redirect("/api");
 };
@@ -50,7 +50,7 @@ exports.redirectURL = (req, res, next) => {
 exports.show = (req, res, next) => {
   res.render("index", {
     url: req.body.url,
-    shortId: req.cookies.shortId,
+    cookies: req.cookies.data,
     host: req.headers.host,
     paymentId: process.env.PAYMENT_ID,
     buttonPayId: process.env.BUTTON_PAY_ID,

@@ -10,6 +10,10 @@ router.get("/api/", urlController.show);
 
 router.get("/:urlID", urlController.redirectURL);
 
+router.get("/", (req, res) => {
+  res.redirect("/api");
+});
+
 router.post(
   "/api/short",
   body("url").isString().isURL(),

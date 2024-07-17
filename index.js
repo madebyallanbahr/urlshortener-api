@@ -13,6 +13,6 @@ api.set("view engine", "ejs");
 
 api.use("/", routes);
 
-api.listen(process.env.API_PORT, () => {
+api.listen(process.env.API_PORT || 4000, () => {
   console.warn(`API is on port:${process.env.API_PORT}`);
 });
