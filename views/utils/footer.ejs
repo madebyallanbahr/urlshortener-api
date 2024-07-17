@@ -1,7 +1,34 @@
 <script async src="https://js.stripe.com/v3/buy-button.js"></script>
 <footer>
   <div
-    class="uk-alert uk-margin uk-position-bottom-center uk-text-center uk-padding-small"
+    class="uk-container uk-margin-large uk-text-center uk-position-bottom-center"
+  >
+    <table
+      class="uk-table-justify uk-margin uk-table uk-table-hover uk-table-striped"
+    >
+      <thead>
+        <tr>
+          <th>URL</th>
+          <th>URL Encurtada</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <% for(const cookie in cookies) { %>
+          <td><%= cookies[cookie] %></td>
+          <% } %>
+          <td>
+            <button onclick="loadCopy()">
+              <span class="uk-icon" uk-icon="copy"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div
+    class="uk-alert uk-margin uk-position-top-center uk-text-center uk-padding-small"
     uk-alert
   >
     <a href="#" class="uk-alert-close" uk-close></a>
@@ -18,3 +45,11 @@
     </stripe-buy-button>
   </div>
 </footer>
+<script>
+  function loadCopy() {
+    navigator.clipboard.writeText("<%= host %>/<%= cookies.short %>");
+
+    // Alert the copied text
+    alert("Copied the text: " + copyText.value);
+  }
+</script>
