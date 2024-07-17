@@ -29,7 +29,7 @@ exports.generateURL = (req, res, next) => {
 
   res.cookie("shortId", data.shortUrl, { maxAge: 12000 });
 
-  return res.redirect("back");
+  return res.redirect("/api");
 };
 
 exports.redirectURL = (req, res, next) => {
