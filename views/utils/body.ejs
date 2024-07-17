@@ -1,4 +1,4 @@
-<form class="uk-container uk-position-center" method="post" action="/api/short">
+<form class="uk-container uk-position-center">
   <h2 class="uk-text-large uk-text-bold">URL Shortener</h2>
   <p class="uk-text-muted">
     Encurtador de links personalizados com a nossa marca!
@@ -10,7 +10,13 @@
     placeholder="URL"
     class="uk-input uk-margin"
   />
-  <button class="uk-button uk-button-primary">Encurtar</button>
+  <button
+    class="uk-button uk-button-primary"
+    formaction="/api/short"
+    formmethod="post"
+  >
+    Encurtar
+  </button>
 
   <% if (shortId) { %>
   <div class="uk-alert uk-margin" uk-alert>
