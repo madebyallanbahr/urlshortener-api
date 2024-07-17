@@ -1,16 +1,15 @@
 const db = require("file-system-db");
-
+const fs = require("fs");
 class Database {
   __path;
   __pool;
   __backup;
-  constructor(path, backup) {
+  constructor(path) {
     this.__path = path;
     this.__pool = null;
-    this.__backup = backup;
   }
   init = () => {
-    this.__pool = new db.FSDB(this.__path, false);
+    this.__pool = new db.FSDB(this.__path);
   };
   insert = (url) => {
     let data = {
@@ -20,9 +19,6 @@ class Database {
 
     this.__pool.set(data.shortUrl, data.fullUrl);
   };
-  all = () => {
-    return this.__pool.getAll();
-  };
 
   ifExistsReturn = (id) => {
     if (this.__pool.has(id)) {
@@ -30,10 +26,6 @@ class Database {
     } else {
       return false;
     }
-  };
-
-  backup = () => {
-    this.__pool.backup(this.__backup);
   };
 }
 

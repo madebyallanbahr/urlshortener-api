@@ -4,22 +4,23 @@ const { validationResult } = require("express-validator");
 const { configDotenv, config } = require("dotenv");
 configDotenv();
 
+const db = new databaseService(
+  "./db/database.json",
+  "./db/backup/database.json"
+);
+
+const url = new urlService();
+
+db.init();
+
 /**
  * @description Generate a URL Short
  */
 exports.generateURL = (req, res, next) => {
-  const url = new urlService();
-  const db = new databaseService(
-    "./db/database.json",
-    "./db/backup/database.json"
-  );
-
   const result = validationResult(req);
   if (!result.isEmpty()) {
     return res.redirect("back");
   }
-
-  db.init();
 
   url.setFullUrl(req.body.url);
 
@@ -35,12 +36,6 @@ exports.generateURL = (req, res, next) => {
 };
 
 exports.redirectURL = (req, res, next) => {
-  const db = new databaseService(
-    "./db/database.json",
-    "./db/backup/database.json"
-  );
-
-  db.init();
   const urlId = req.params.urlID;
 
   const url = db.ifExistsReturn(urlId);

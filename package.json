@@ -18,6 +18,14 @@
     "express-validator": "^7.1.0",
     "file-system-db": "^2.1.0"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "**/test/**",
+      "**/docs/**",
+      ".json"
+    ],
+    "delay": 2500
+  },
   "devDependencies": {
     "nodemon": "^3.1.4"
   }
