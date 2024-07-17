@@ -19,9 +19,7 @@
           <td><%= cookies[cookie] %></td>
           <% } %>
           <td>
-            <button onclick="loadCopy()">
-              <span class="uk-icon" uk-icon="copy"></span>
-            </button>
+            <span class="uk-icon" uk-icon="copy"></span>
           </td>
         </tr>
       </tbody>
@@ -45,8 +43,3 @@
     </stripe-buy-button>
   </div>
 </footer>
-<script>
-  function loadCopy() {
-    navigator.clipboard.writeText("<% host %>/<% cookies.short %>");
-  }
-</script>
