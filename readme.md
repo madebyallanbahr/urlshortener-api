@@ -38,7 +38,7 @@ Back-end é formado por:
 
 #### Como Usar (ambiente de prod)
 
-Basta acessar o [link](https://urlshortener-j1b5.onrender.com/api)!
+Basta acessar o [link](https://www.urlshortener.com.br/api))!
 
 #### Contribuições
 
