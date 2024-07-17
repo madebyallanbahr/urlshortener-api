@@ -10,7 +10,7 @@ class Database {
     this.__backup = backup;
   }
   init = () => {
-    this.__pool = new db.FSDB(this.__path);
+    this.__pool = new db.FSDB(this.__path, false);
   };
   insert = (url) => {
     let data = {
@@ -25,12 +25,12 @@ class Database {
   };
 
   ifExistsReturn = (id) => {
-    if(this.__pool.has(id)) {
+    if (this.__pool.has(id)) {
       return this.__pool.get(id);
     } else {
       return false;
     }
-  }
+  };
 
   backup = () => {
     this.__pool.backup(this.__backup);

@@ -19,7 +19,7 @@ exports.generateURL = (req, res, next) => {
 
   db.init();
 
-  url.setFullUrl(req.body.url)
+  url.setFullUrl(req.body.url);
 
   url.generateShortUrl();
 
@@ -27,7 +27,9 @@ exports.generateURL = (req, res, next) => {
 
   db.insert(data);
 
-  res.render('index', {short: data.shortUrl, full: data.fullUrl});
+  res.cookie("shortId", data.shortUrl, { maxAge: 5000 });
+
+  return res.redirect("back");
 };
 
 exports.redirectURL = (req, res, next) => {
@@ -38,16 +40,20 @@ exports.redirectURL = (req, res, next) => {
 
   db.init();
   const urlId = req.params.urlID;
-  
+
   const url = db.ifExistsReturn(urlId);
 
   if (!url) {
-    return res.redirect('/api');
+    return res.redirect("/api");
   }
 
   res.redirect(url);
 };
 
 exports.show = (req, res, next) => {
-  res.render("index", { url: req.body.url });
+  res.render("index", {
+    url: req.body.url,
+    shortId: req.cookies.shortId,
+    host: req.headers.host,
+  });
 };
