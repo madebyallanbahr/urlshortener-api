@@ -27,7 +27,7 @@ exports.generateURL = (req, res, next) => {
 
   db.insert(data);
 
-  res.cookie("shortId", data.shortUrl, { maxAge: 5000 });
+  res.cookie("shortId", data.shortUrl, { maxAge: 12000 });
 
   return res.redirect("back");
 };
