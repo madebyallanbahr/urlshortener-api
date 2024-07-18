@@ -6,17 +6,14 @@ const urlController = require("../controllers/urlController");
 
 router.use(express.json());
 
-router.get("/api/", urlController.show);
-
 router.get("/:urlID", urlController.redirectURL);
-
-router.get("/", (req, res) => {
-  res.redirect("/api");
-});
 
 router.post(
   "/api/short",
-  body("url").isString().isURL(),
+  body("url")
+    .isString()
+    .isURL()
+    .withMessage("A url fornecida precisa ser uma URL válida!"),
   urlController.generateURL
 );
 
