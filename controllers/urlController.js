@@ -28,17 +28,11 @@ exports.generateURL = (req, res, next) => {
 
   url.generateShortUrl();
 
-  url.generateUserId(
-    req.connection.remoteAddress ||
-      req.socket.remoteAddress ||
-      req.connection.socket.remoteAddress
-  );
-
   let data = url.returnData();
 
   db.insert(data);
 
-  return res.json({ full: data.fullUrl, short: data.shortUrl });
+  return res.json(data);
 };
 
 /**
@@ -46,15 +40,13 @@ exports.generateURL = (req, res, next) => {
  */
 exports.redirectURL = (req, res, next) => {
   const urlId = req.params.urlID;
-  const url = db.ifExistsReturn(urlId).then((val) => {
-    this.redirect = val;
-  });
+  const url = db.ifExistsReturn(urlId)
 
-  if (!this.redirect) {
+  if (!url) {
     return res
       .status(422)
       .json({ error: "URL Encurtada não encontrada!", status: 422 });
   }
 
-  res.redirect(this.redirect);
+  return res.redirect(url);
 };
