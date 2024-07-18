@@ -4,7 +4,7 @@ Aplicação full-stack focada no encurtamento de links, tornando mais fácil com
 
 Front-end é formado por:
 
-- ejs
+- vue.js
 - franken-ui(estilização baseada no shadcn/ui | bootstrap)
 
 Back-end é formado por:
@@ -12,7 +12,6 @@ Back-end é formado por:
 - Express.js
 - file-system-db (Banco de Dados)
 - express-validator(Validação),
-- cookie-parser(Manipulação de informações para a view)
 
 #### Como Usar (ambiente de dev)
 
