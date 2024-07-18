@@ -1,7 +1,7 @@
 const urlService = require("../services/Url");
 const databaseService = require("../services/Database");
 const { validationResult } = require("express-validator");
-const { configDotenv, config } = require("dotenv");
+const { configDotenv } = require("dotenv");
 configDotenv();
 
 const db = new databaseService(
@@ -19,7 +19,9 @@ db.init();
 exports.generateURL = (req, res, next) => {
   const result = validationResult(req);
   if (!result.isEmpty()) {
-    return res.redirect("back");
+    return res
+      .status(422)
+      .json({ error: result.mapped().url.msg, status: 422 });
   }
 
   url.setFullUrl(req.body.url);
@@ -30,29 +32,22 @@ exports.generateURL = (req, res, next) => {
 
   db.insert(data);
 
-  res.cookie("data", { full: data.fullUrl, short: data.shortUrl });
-
-  return res.redirect("/api");
+  return res.json({ full: data.fullUrl, short: data.shortUrl });
 };
 
+/**
+ * @description Redirect to the URL
+ */
 exports.redirectURL = (req, res, next) => {
   const urlId = req.params.urlID;
 
   const url = db.ifExistsReturn(urlId);
 
   if (!url) {
-    return res.redirect("/api");
+    return res
+      .status(422)
+      .json({ error: "URL Encurtada não encontrada!", status: 422 });
   }
 
   res.redirect(url);
-};
-
-exports.show = (req, res, next) => {
-  res.render("index", {
-    url: req.body.url,
-    cookies: req.cookies.data,
-    host: req.headers.host,
-    paymentId: process.env.PAYMENT_ID,
-    buttonPayId: process.env.BUTTON_PAY_ID,
-  });
 };
