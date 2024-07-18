@@ -10,7 +10,7 @@ api.use(express.urlencoded({ extended: true }));
 api.use(express.json());
 api.use(cors());
 
-app.use((req, res, next) => {
+api.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
