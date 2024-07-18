@@ -1,9 +1,13 @@
+const crypto = require("crypto");
+
 class Url {
   fullUrl;
   shortUrl;
+  userId;
   constructor() {
     this.fullUrl = undefined;
     this.shortUrl = undefined;
+    this.userId = undefined;
   }
   generateShortUrl = () => {
     let result = "";
@@ -17,13 +21,19 @@ class Url {
     }
     this.shortUrl = result;
   };
+  generateUserId = (ip) => {
+    const hash = crypto.createHash("sha256");
+    hash.update(ip);
+    this.userId = hash.digest("hex");
+  };
   setFullUrl = (url) => {
     this.fullUrl = url;
-  }
-  returnUrl = () => {
+  };
+  returnData = () => {
     return {
       fullUrl: this.fullUrl,
       shortUrl: this.shortUrl,
+      userId: this.userId,
     };
   };
 }
