@@ -1,52 +1,24 @@
-const urlService = require("../services/Url");
-const databaseService = require("../services/Database");
-const { validationResult } = require("express-validator");
-const { configDotenv } = require("dotenv");
-configDotenv();
-
-const db = new databaseService(
-  "./db/database.json",
-  "./db/backup/database.json"
-);
-
-const url = new urlService();
-
-db.init();
+import * as urlService from "../services/urlService.js";
+import * as databaseService from "../services/databaseService.js";
 
 /**
  * @description Generate a URL Short
  */
-exports.generateURL = (req, res, next) => {
-  const result = validationResult(req);
-  if (!result.isEmpty()) {
-    return res
-      .status(422)
-      .json({ error: result.mapped().url.msg, status: 422 });
-  }
+export const generateURL = (req, res, next) => {
+	const userId = req; // IP ? Unique Key?;
+	const bodyUrl = req.body.url;
 
-  url.setFullUrl(req.body.url);
-
-  url.generateShortUrl();
-
-  let data = url.returnData();
-
-  db.insert(data);
-
-  return res.json(data);
+	urlService.shortUrl(userId, bodyUrl);
+	return res.json(data);
 };
 
 /**
  * @description Redirect to the URL
  */
-exports.redirectURL = (req, res, next) => {
-  const urlId = req.params.urlID;
-  const url = db.ifExistsReturn(urlId)
+export const redirectURL = (req, res, next) => {
+	const urlId = req.params.urlID;
 
-  if (!url) {
-    return res
-      .status(422)
-      .json({ error: "URL Encurtada não encontrada!", status: 422 });
-  }
+	urlService.retrieveUrl(urlId);
 
-  return res.redirect(url);
+	return res.redirect(url);
 };

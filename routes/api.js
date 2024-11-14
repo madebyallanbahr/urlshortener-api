@@ -1,20 +1,12 @@
-const { body } = require("express-validator");
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
-const urlController = require("../controllers/urlController");
+import * as urlController from "../controllers/urlController.js";
 
 router.use(express.json());
 
 router.get("/:urlID", urlController.redirectURL);
 
-router.post(
-  "/api/short",
-  body("url")
-    .isString()
-    .isURL()
-    .withMessage("A url fornecida precisa ser uma URL válida!"),
-  urlController.generateURL
-);
+router.post("/api/short", urlController.generateURL);
 
-module.exports = router;
+export const routes = router;

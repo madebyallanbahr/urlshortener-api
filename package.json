@@ -1,32 +1,29 @@
 {
-  "name": "url-shortener",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "type": "commonjs",
-  "scripts": {
-    "dev": "nodemon ."
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "crypto": "^1.0.1",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "express-validator": "^7.1.0",
-    "file-system-db": "^2.1.0"
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "**/test/**",
-      "**/docs/**",
-      ".json"
-    ],
-    "delay": 2500
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.4"
-  }
+	"name": "url-shortener",
+	"version": "1.0.0",
+	"description": "URL Shortener API for short links.",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"dev": "nodemon ."
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"cors": "^2.8.5",
+		"express": "^4.19.2",
+		"lowdb": "^7.0.1",
+		"yup": "^1.4.0"
+	},
+	"nodemonConfig": {
+		"ignore": [
+			"**/test/**",
+			"**/docs/**",
+			".json"
+		]
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.4"
+	}
 }
