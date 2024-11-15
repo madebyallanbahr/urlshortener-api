@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 export class urlRepository {
 	static urlIdentifier = () => {
 		let hash = "";
+
 		const characters =
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 		const charactersLength = characters.length;

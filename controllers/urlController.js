@@ -1,15 +1,21 @@
 import * as urlService from "../services/urlService.js";
 import * as databaseService from "../services/databaseService.js";
 
+const services = {
+	url: new urlService.urlService(),
+	db: new databaseService.databaseService(),
+};
+
 /**
  * @description Generate a URL Short
  */
 export const generateURL = (req, res, next) => {
-	const userId = req; // IP ? Unique Key?;
+	const userId = req.socket.remoteAddress ?? null;
 	const bodyUrl = req.body.url;
 
-	urlService.shortUrl(userId, bodyUrl);
-	return res.json(data);
+	const url = services.url.shortUrl(userId, bodyUrl);
+
+	return res.json(url);
 };
 
 /**
@@ -18,7 +24,15 @@ export const generateURL = (req, res, next) => {
 export const redirectURL = (req, res, next) => {
 	const urlId = req.params.urlID;
 
-	urlService.retrieveUrl(urlId);
+	const url = services.url.retrieveUrl(urlId);
 
-	return res.redirect(url);
+	if (!url) return res.status(422).json({ error: "Link inválido" });
+
+	const redirectUrl =
+		url.link.fullUrl.startsWith("http://") ||
+		url.link.fullUrl.startsWith("https://")
+			? url.link.fullUrl
+			: `http://${url.link.fullUrl}`;
+
+	return res.redirect(redirectUrl);
 };

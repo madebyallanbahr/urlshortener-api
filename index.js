@@ -20,6 +20,6 @@ api.use((req, res, next) => {
 
 api.use("/", routes);
 
-api.listen(4440 || 4000, () => {
+api.listen(4440, () => {
 	console.warn(`API is Online!`);
 });

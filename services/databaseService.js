@@ -1,30 +1,52 @@
-import * as adapter from "lowdb/node";
+import { LowSync } from "lowdb";
+import { JSONFileSync } from "lowdb/node";
 
 export class databaseService {
 	constructor() {
-		if (this.instance != null) {
-			return this.instance;
+		if (databaseService.instance) {
+			return databaseService.instance;
 		}
 
 		this.init();
+		databaseService.instance = this;
 	}
+
 	init = () => {
-		this.instance = adapter.JSONFileSyncPreset("../db/database.json");
+		const adapter = new JSONFileSync("./db/database.json");
+		this.db = new LowSync(adapter, { urls: {} });
+		this.db.read();
 	};
 
 	insertInto = (data) => {
-		if (!data) return;
+		if (!data || !data.shortUrl) return;
 
 		const payload = this.makePayload(data);
-		this.instance.write(payload);
+
+		// Insere ou atualiza o payload usando shortUrl como chave
+		this.db.data.urls[data.shortUrl] = payload;
+		this.db.write();
 	};
 
 	makePayload = (data) => {
-		if (!data) return;
+		if (!data) return null;
 
-		return (data.userId = {
-			shortUrl: data.shortUrl,
+		return {
+			userId: data.userId,
 			fullUrl: data.fullUrl,
-		});
+		};
+	};
+
+	findByUserId = (userId) => {
+		if (!userId) return null;
+
+		// Filtra os registros onde o `userId` corresponde
+		return Object.entries(this.db.data.urls)
+			.filter(([_, value]) => value.userId === userId)
+			.map(([shortUrl, value]) => ({ shortUrl, ...value }));
+	};
+	findByShortUrl = (shortUrl) => {
+		if (!shortUrl) return null;
+
+		return this.db.data.urls[shortUrl] || null;
 	};
 }
