@@ -12,7 +12,7 @@ export class databaseService {
 	}
 
 	init = () => {
-		const adapter = new JSONFileSync("./db/database.json");
+		const adapter = new JSONFileSync("../db/database.json");
 		this.db = new LowSync(adapter, { urls: {} });
 		this.db.read();
 	};
@@ -22,7 +22,6 @@ export class databaseService {
 
 		const payload = this.makePayload(data);
 
-		// Insere ou atualiza o payload usando shortUrl como chave
 		this.db.data.urls[data.shortUrl] = payload;
 		this.db.write();
 	};
@@ -39,7 +38,6 @@ export class databaseService {
 	findByUserId = (userId) => {
 		if (!userId) return null;
 
-		// Filtra os registros onde o `userId` corresponde
 		return Object.entries(this.db.data.urls)
 			.filter(([_, value]) => value.userId === userId)
 			.map(([shortUrl, value]) => ({ shortUrl, ...value }));
