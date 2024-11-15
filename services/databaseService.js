@@ -1,5 +1,5 @@
 import { LowSync } from "lowdb";
-import { JSONFileSync } from "lowdb/node";
+import { JSONFilePreset, JSONFileSync } from "lowdb/node";
 
 export class databaseService {
 	constructor() {
@@ -11,9 +11,8 @@ export class databaseService {
 		databaseService.instance = this;
 	}
 
-	init = () => {
-		const adapter = new JSONFileSync("../db/database.json");
-		this.db = new LowSync(adapter, { urls: {} });
+	init = async () => {
+		this.db = await JSONFilePreset("./db/database.json", { urls: {} });
 		this.db.read();
 	};
 
